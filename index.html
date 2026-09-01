@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Přání pro Káťu 🌹 </title>
-    <!-- Knihovna pro konfety -->
+    <title>Přání pro Káťu ❤️</title>
+    <!-- Knihovna pro konfety a efekty -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Romantické a velmi dobře čitelné písmo Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Playfair Display', Georgia, serif;
         }
 
         body {
@@ -63,6 +68,8 @@
         #slide-5 { background-image: url('fotka5.jpeg'); }
         #slide-6 { background-image: url('fotka6.jpeg'); }
         #slide-7 { background-image: url('fotka1.jpeg'); }
+        #slide-8 { background-image: url('fotka2.jpeg'); } /* Galerie bez textu */
+        #slide-9 { background-image: url('fotka3.jpeg'); } /* Závěrečné přání */
 
         /* Ztmavovací vrstva pro snadnou čitelnost textu přes fotku */
         .overlay {
@@ -78,7 +85,7 @@
         .card {
             position: relative;
             z-index: 2;
-            background-color: rgba(15, 15, 15, 0.85);
+            background-color: rgba(15, 15, 15, 0.88);
             backdrop-filter: blur(8px);
             padding: 30px 25px;
             border-radius: 20px;
@@ -89,30 +96,39 @@
             text-align: center;
         }
 
+        /* Karta pro fotogalerii */
+        .card-gallery {
+            max-width: 850px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
         h1 {
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             margin-bottom: 25px;
             color: #ffffff;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         p {
-            line-height: 1.8;
-            font-size: 1.1rem;
-            color: #eeeeee;
+            line-height: 1.85;
+            font-size: 1.15rem;
+            color: #f0f0f0;
             margin-bottom: 25px;
             text-align: left;
         }
 
         .signature {
-            font-size: 1.3rem;
-            color: #e63946;
+            font-size: 1.35rem;
+            color: #ff4d5e;
             font-weight: bold;
             margin-top: 15px;
             text-align: center;
+            font-style: italic;
         }
 
-        /* Tlačítko Pokračovat */
+        /* Tlačítka */
         .btn-next {
             padding: 14px 32px;
             font-size: 1.1rem;
@@ -130,6 +146,37 @@
         .btn-next:hover {
             background-color: #ff4d5e;
             transform: scale(1.05);
+        }
+
+        .btn-close {
+            background-color: #333333;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-top: 15px;
+        }
+
+        .btn-close:hover {
+            background-color: #e63946;
+        }
+
+        /* Fotogalerie (Slide 8) */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .photo-grid img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-grid img:hover {
+            transform: scale(1.04);
         }
 
         /* Ovládání hudby dole */
@@ -226,12 +273,40 @@
         </div>
     </div>
 
-    <!-- SLIDE 7 (Poslední) -->
+    <!-- SLIDE 7 -->
     <div id="slide-7" class="slide">
         <div class="overlay"></div>
         <div class="card">
-            <p>Takže ti k těm tvým 17. narozeninám přeju úplně všechno nejlepší. Přeju ti zdraví, štěstí, lásku, radost, splněné sny a hlavně spoustu důvodů k úsměvu. A jestli ti můžu přát ještě něco, tak to, abys nikdy nepochybovala o tom, jak moc jsi pro mě důležitá.<br><br>Užij si svůj den naplno, protože dneska je to hlavně o tobě. ❤️<br><br>Až se vrátíš z Rakouska, čeká tě pořádná pusa, obejmutí a dáreček 🥹❤️</p>
+            <p>Takže ti k těm tvým 17. narozeninám přeju úplně všechno nejlepší. Přeju ti zdraví, štěstí, lásku, radost, splněné sny a hlavně spoustu důvodů k úsměvu. A jestli ti můžu přát ještě něco, tak to, abys nikdy nepochybovala o tom, jak moc jsi pro mě důležitá.</p>
+            <button class="btn-next" onclick="nextSlide(8)">Naše vzpomínky 📸 ➔</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Galerie společných fotek (bez hlavního textu) -->
+    <div id="slide-8" class="slide">
+        <div class="overlay"></div>
+        <div class="card card-gallery">
+            <h1 style="margin-bottom: 20px;">Naše společné chvíle ❤️</h1>
+            <div class="photo-grid">
+                <img src="fotka1.jpeg" alt="Vzpomínka 1">
+                <img src="fotka2.jpeg" alt="Vzpomínka 2">
+                <img src="fotka3.jpeg" alt="Vzpomínka 3">
+                <img src="fotka4.jpeg" alt="Vzpomínka 4">
+                <img src="fotka5.jpeg" alt="Vzpomínka 5">
+                <img src="fotka6.jpeg" alt="Vzpomínka 6">
+            </div>
+            <button class="btn-next" onclick="nextSlide(9)">Závěr ➔</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: Závěr s přáním a tlačítkem ZAVŘÍT -->
+    <div id="slide-9" class="slide">
+        <div class="overlay"></div>
+        <div class="card">
+            <p>Užij si svůj den naplno, protože dneska je to hlavně o tobě. ❤️<br><br>Až se vrátíš z Rakouska, čeká tě pořádná pusa, obejmutí a dáreček 🥹❤️</p>
             <div class="signature">Miluju tě, Tvůj Míra ❤️</div>
+            <br>
+            <button class="btn-next btn-close" onclick="closeGreeting()">Zavřít ❤️</button>
         </div>
     </div>
 
@@ -239,14 +314,32 @@
         const audio = document.getElementById('bg-music');
         let currentSlide = 0;
 
+        function shootHearts() {
+            // Efekt vyletujících srdíček
+            const scalar = 2;
+            const heart = confetti.shapeFromText({ text: '❤️', scalar });
+            
+            confetti({
+                shapes: [heart],
+                particleCount: 25,
+                spread: 60,
+                origin: { y: 0.75 },
+                scalar: 1.5
+            });
+        }
+
         function nextSlide(slideIndex, isFirst = false) {
             if (isFirst) {
                 audio.play().catch(e => console.log("Audio zablokováno"));
+                // Úvodní velké konfety
                 confetti({
                     particleCount: 150,
                     spread: 90,
                     origin: { y: 0.6 }
                 });
+            } else {
+                // Srdíčkový efekt při každém dalším kroku
+                shootHearts();
             }
 
             const current = document.getElementById('slide-' + currentSlide);
@@ -256,6 +349,19 @@
             if (next) next.classList.add('active');
 
             currentSlide = slideIndex;
+        }
+
+        function closeGreeting() {
+            // Návrat na úvodní černou obrazovku
+            const current = document.getElementById('slide-' + currentSlide);
+            const intro = document.getElementById('slide-0');
+
+            if (current) current.classList.remove('active');
+            if (intro) intro.classList.add('active');
+
+            audio.pause();
+            audio.currentTime = 0;
+            currentSlide = 0;
         }
 
         function toggleMusic() {
