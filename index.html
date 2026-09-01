@@ -6,7 +6,7 @@
     <title>Přání pro Káťu ❤️</title>
     <!-- Knihovna pro konfety a efekty -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <!-- Romantické a velmi dobře čitelné písmo Playfair Display -->
+    <!-- Romantické a čitelné písmo Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
@@ -68,8 +68,8 @@
         #slide-5 { background-image: url('fotka5.jpeg'); }
         #slide-6 { background-image: url('fotka6.jpeg'); }
         #slide-7 { background-image: url('fotka1.jpeg'); }
-        #slide-8 { background-image: url('fotka2.jpeg'); } /* Galerie bez textu */
-        #slide-9 { background-image: url('fotka3.jpeg'); } /* Závěrečné přání */
+        #slide-8 { background-image: url('fotka2.jpeg'); }
+        #slide-9 { background-image: url('fotka3.jpeg'); }
 
         /* Ztmavovací vrstva pro snadnou čitelnost textu přes fotku */
         .overlay {
@@ -315,30 +315,27 @@
         let currentSlide = 0;
 
         function shootHearts() {
-            // Efekt vyletujících srdíček
-            const scalar = 2;
-            const heart = confetti.shapeFromText({ text: '❤️', scalar });
-            
-            confetti({
-                shapes: [heart],
-                particleCount: 25,
-                spread: 60,
-                origin: { y: 0.75 },
-                scalar: 1.5
-            });
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 30,
+                    spread: 70,
+                    origin: { y: 0.7 },
+                    colors: ['#e63946', '#ff4d5e', '#ff758f', '#ffffff']
+                });
+            }
         }
 
         function nextSlide(slideIndex, isFirst = false) {
             if (isFirst) {
                 audio.play().catch(e => console.log("Audio zablokováno"));
-                // Úvodní velké konfety
-                confetti({
-                    particleCount: 150,
-                    spread: 90,
-                    origin: { y: 0.6 }
-                });
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 120,
+                        spread: 90,
+                        origin: { y: 0.6 }
+                    });
+                }
             } else {
-                // Srdíčkový efekt při každém dalším kroku
                 shootHearts();
             }
 
@@ -352,7 +349,6 @@
         }
 
         function closeGreeting() {
-            // Návrat na úvodní černou obrazovku
             const current = document.getElementById('slide-' + currentSlide);
             const intro = document.getElementById('slide-0');
 
