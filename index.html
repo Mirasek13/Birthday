@@ -18,52 +18,51 @@
             background-color: #000000;
             color: #ffffff;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
-        /* 1. SLIDE - Úvodní černá obrazovka */
-        #intro-screen {
+        /* Styling slidů */
+        .slide {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background-color: #000000;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 20px;
-            z-index: 10;
-            transition: opacity 1.2s ease;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease-in-out;
+            z-index: 1;
         }
 
-        #intro-screen h1 {
-            font-size: 2.3rem;
-            margin-bottom: 30px;
-            color: #ffffff;
-            font-weight: 500;
-            letter-spacing: 1px;
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 2;
         }
 
-        .btn-enter {
-            padding: 16px 36px;
-            font-size: 1.2rem;
-            background-color: #e63946;
-            color: #ffffff;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(230, 57, 70, 0.6);
-            font-weight: 600;
+        /* 1. SLIDE - Úvodní černá obrazovka */
+        #slide-0 {
+            background-color: #000000;
+            background-image: none;
         }
 
-        .btn-enter:hover {
-            background-color: #ff4d5e;
-            transform: scale(1.08);
-        }
+        /* Fotky na pozadí pro jednotlivé slidy */
+        #slide-1 { background-image: url('fotka1.jpg'); }
+        #slide-2 { background-image: url('fotka2.jpg'); }
+        #slide-3 { background-image: url('fotka3.jpg'); }
+        #slide-4 { background-image: url('fotka4.jpg'); }
+        #slide-5 { background-image: url('fotka5.jpg'); }
+        #slide-6 { background-image: url('fotka6.jpg'); }
+        #slide-7 { background-image: url('fotka1.jpg'); }
 
         /* Ztmavovací vrstva pro snadnou čitelnost textu přes fotku */
         .overlay {
@@ -76,162 +75,187 @@
             z-index: 1;
         }
 
-        /* 2. SLIDE - Hlavní stranka přání s fotkou na pozadí */
-        #main-wrapper {
-            display: none;
-            opacity: 0;
-            min-height: 100vh;
-            width: 100%;
-            background-image: url('fotka1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            position: relative;
-            transition: opacity 1.5s ease;
-        }
-
-        .main-container {
+        .card {
             position: relative;
             z-index: 2;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 50px 20px;
-        }
-
-        .card {
-            background-color: rgba(15, 15, 15, 0.88);
-            backdrop-filter: blur(10px);
-            padding: 40px 30px;
-            border-radius: 24px;
+            background-color: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 30px 25px;
+            border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            max-width: 750px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 650px;
             width: 100%;
-            text-align: left;
+            text-align: center;
         }
 
-        .story {
-            line-height: 1.85;
-            font-size: 1.08rem;
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        p {
+            line-height: 1.8;
+            font-size: 1.1rem;
             color: #eeeeee;
-        }
-
-        .story p {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            text-align: left;
         }
 
         .signature {
             font-size: 1.3rem;
             color: #e63946;
             font-weight: bold;
-            margin-top: 30px;
-            text-align: right;
+            margin-top: 15px;
+            text-align: center;
         }
 
-        /* Ovládání hudby */
+        /* Tlačítko Pokračovat */
+        .btn-next {
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            background-color: #e63946;
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(230, 57, 70, 0.5);
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .btn-next:hover {
+            background-color: #ff4d5e;
+            transform: scale(1.05);
+        }
+
+        /* Ovládání hudby dole */
         .music-player-box {
-            text-align: center;
-            margin-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            z-index: 100;
         }
 
         .music-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.95rem;
-            transition: background 0.3s ease;
-        }
-
-        .music-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+            font-size: 0.85rem;
+            backdrop-filter: blur(5px);
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. SLIDE: Úvodní černá obrazovka -->
-    <div id="intro-screen">
-        <h1>Přání pro mojí lásku Káťu ❤️</h1>
-        <button class="btn-enter" onclick="openGreeting()">Otevřít přání 🎵</button>
-    </div>
-
-    <!-- Písnička na pozadí -->
+    <!-- Audio prvek -->
     <audio id="bg-music" loop preload="auto">
         <source src="pesnicka.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- 2. SLIDE: Fotka na pozadí s tvým textem -->
-    <div id="main-wrapper">
-        <div class="overlay"></div>
-        <div class="main-container">
-            <div class="card">
-                <div class="story">
-                    <p>Takže můj bobiku❤️</p>
-                    
-                    <p>Dneska máš svoje 17. narozeniny a já bych ti chtěl popřát hlavně to nejdůležitější – aby si byla šťastná, spokojená a aby ses pořád smála tak, jak se směješ. ❤️ Přeju ti, aby se ti splnilo všechno, co si přeješ, aby tě v životě potkávalo co nejvíc krásných věcí a co nejmíň těch špatných. A hlavně abys měla semnou pevné nervy.💋</p>
-                    
-                    <p>Je trochu škoda, že zrovna tento týden nejsi tady se mnou, ale i když jsi teď v Rakousku a nemůžu ti popřát osobně, chci, abys věděla, že na tebe dnes myslím ještě víc než normálně. Kdybych mohl, byl bych teď hned vedle tebe, objal tě, dal ti pusu a řekl ti všechno osobně. ❤️</p>
-                    
-                    <p>Když se nad tím tak zamyslím, jsem strašně rád, že tě mám. Za tu dobu, co jsme spolu, jsme spolu zažili tolik věcí, na které nechci nikdy zapomenout. Od úplně obyčejných chvil, kdy jsme jen byli spolu, až po všechny naše společné zážitky, smích, blbosti, naše rozhovory, hádky, usmiřování a všechny ty malé momenty, které možná vypadají jako nic, ale pro mě znamenají strašně moc.💓</p>
-                    
-                    <p>A právě tyhle chvíle jsou podle mě to nejhezčí. Nemusí se pořád dít něco velkého. Stačí mi být s tebou, koukat na tebe, držet tě za ruku, obejmout tě nebo se s tebou smát úplné kravině. ❤️ Protože právě v těch obyčejných chvílích si vždycky uvědomím, jak moc pro mě znamenáš.</p>
-                    
-                    <p>Chci ti taky poděkovat za to, jaká jsi. Za to, že jsi tu pro mě, za všechny chvíle, kdy jsi mě dokázala rozesmát, podržet nebo mi jen zlepšit den tím, že jsi byla se mnou. Možná ti to neříkám pokaždé, když bych měl, ale opravdu si toho vážím.❤️‍🩹</p>
-                    
-                    <p>Je až šílené, jak rychle čas utíká. Dneska je ti 17 a já doufám, že spolu zažijeme ještě obrovské množství dalších narozenin, výročí, výletů, večerů, smíchu a všech těch našich malých i velkých momentů. Chci s tebou dál tvořit vzpomínky, ke kterým se jednou budeme vracet a říkat si, jak jsme byli mladí a jak jsme spolu všechno prožívali. ❤️</p>
-                    
-                    <p>Takže ti k těm tvým 17. narozeninám přeju úplně všechno nejlepší. Přeju ti zdraví, štěstí, lásku, radost, splněné sny a hlavně spoustu důvodů k úsměvu. A jestli ti můžu přát ještě něco, tak to, abys nikdy nepochybovala o tom, jak moc jsi pro mě důležitá.</p>
-                    
-                    <p>Užij si svůj den naplno, protože dneska je to hlavně o tobě. ❤️</p>
-                    
-                    <p>Až se vrátíš z Rakouska, čeká tě pořádná pusa, obejmutí a dáreček 🥹❤️</p>
-                    
-                    <div class="signature">
-                        Miluju tě, Tvůj Míra
-                    </div>
-                </div>
+    <!-- Ovládací tlačítko pro hudbu -->
+    <div class="music-player-box">
+        <button onclick="toggleMusic()" id="music-btn" class="music-btn">⏸️ Pozastavit hudbu</button>
+    </div>
 
-                <!-- Tlačítko pro hudbu -->
-                <div class="music-player-box">
-                    <button onclick="toggleMusic()" id="music-btn" class="music-btn">⏸️ Pozastavit hudbu</button>
-                </div>
-            </div>
+    <!-- SLIDE 0: Úvodní černá obrazovka -->
+    <div id="slide-0" class="slide active">
+        <div class="card">
+            <h1>Přání pro mojí lásku Káťu ❤️</h1>
+            <button class="btn-next" onclick="nextSlide(1, true)">Otevřít přání 🎵</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 1 -->
+    <div id="slide-1" class="slide">
+        <div class="overlay"></div>
+        <div class="card">
+            <p>Takže můj bobiku❤️<br><br>Dneska máš svoje 17. narozeniny a já bych ti chtěl popřát hlavně to nejdůležitější – aby si byla šťastná, spokojená a aby ses pořád smála tak, jak se směješ. ❤️ Přeju ti, aby se ti splnilo všechno, co si přeješ, aby tě v životě potkávalo co nejvíc krásných věcí a co nejmíň těch špatných. A hlavně abys měla semnou pevné nervy.💋</p>
+            <button class="btn-next" onclick="nextSlide(2)">Pokračovat ➔</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div id="slide-2" class="slide">
+        <div class="overlay"></div>
+        <div class="card">
+            <p>Je trochu škoda, že zrovna tento týden nejsi tady se mnou, ale i když jsi teď v Rakousku a nemůžu ti popřát osobně, chci, abys věděla, že na tebe dnes myslím ještě víc než normálně. Kdybych mohl, byl bych teď hned vedle tebe, objal tě, dal ti pusu a řekl ti všechno osobně. ❤️</p>
+            <button class="btn-next" onclick="nextSlide(3)">Pokračovat ➔</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div id="slide-3" class="slide">
+        <div class="overlay"></div>
+        <div class="card">
+            <p>Když se nad tím tak zamyslím, jsem strašně rád, že tě mám. Za tu dobu, co jsme spolu, jsme spolu zažili tolik věcí, na které nechci nikdy zapomenout. Od úplně obyčejných chvil, kdy jsme jen byli spolu, až po všechny naše společné zážitky, smích, blbosti, naše rozhovory, hádky, usmiřování a všechny ty malé momenty, které možná vypadají jako nic, ale pro mě znamenají strašně moc.💓</p>
+            <button class="btn-next" onclick="nextSlide(4)">Pokračovat ➔</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 4 -->
+    <div id="slide-4" class="slide">
+        <div class="overlay"></div>
+        <div class="card">
+            <p>A právě tyhle chvíle jsou podle mě to nejhezčí. Nemusí se pořád dít něco velkého. Stačí mi být s tebou, koukat na tebe, držet tě za ruku, obejmout tě nebo se s tebou smát úplné kravině. ❤️ Protože právě v těch obyčejných chvílích si vždycky uvědomím, jak moc pro mě znamenáš.</p>
+            <button class="btn-next" onclick="nextSlide(5)">Pokračovat ➔</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 5 -->
+    <div id="slide-5" class="slide">
+        <div class="overlay"></div>
+        <div class="card">
+            <p>Chci ti taky poděkovat za to, jaká jsi. Za to, že jsi tu pro mě, za všechny chvíle, kdy jsi mě dokázala rozesmát, podržet nebo mi jen zlepšit den tím, že jsi byla se mnou. Možná ti to neříkám pokaždé, když bych měl, ale opravdu si toho vážím.❤️‍fält</p>
+            <button class="btn-next" onclick="nextSlide(6)">Pokračovat ➔</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 6 -->
+    <div id="slide-6" class="slide">
+        <div class="overlay"></div>
+        <div class="card">
+            <p>Je až šílené, jak rychle čas utíká. Dneska je ti 17 a já doufám, že spolu zažijeme ještě obrovské množství dalších narozenin, výročí, výletů, večerů, smíchu a všech těch našich malých i velkých momentů. Chci s tebou dál tvořit vzpomínky, ke kterým se jednou budeme vracet a říkat si, jak jsme byli mladí a jak jsme spolu všechno prožívali. ❤️</p>
+            <button class="btn-next" onclick="nextSlide(7)">Pokračovat ➔</button>
+        </div>
+    </div>
+
+    <!-- SLIDE 7 (Poslední) -->
+    <div id="slide-7" class="slide">
+        <div class="overlay"></div>
+        <div class="card">
+            <p>Takže ti k těm tvým 17. narozeninám přeju úplně všechno nejlepší. Přeju ti zdraví, štěstí, lásku, radost, splněné sny a hlavně spoustu důvodů k úsměvu. A jestli ti můžu přát ještě něco, tak to, abys nikdy nepochybovala o tom, jak moc jsi pro mě důležitá.<br><br>Užij si svůj den naplno, protože dneska je to hlavně o tobě. ❤️<br><br>Až se vrátíš z Rakouska, čeká tě pořádná pusa, obejmutí a dáreček 🥹❤️</p>
+            <div class="signature">Miluju tě, Tvůj Míra ❤️</div>
         </div>
     </div>
 
     <script>
         const audio = document.getElementById('bg-music');
+        let currentSlide = 0;
 
-        function openGreeting() {
-            // Spuštění hudby
-            audio.play().catch(e => console.log("Audio automaticky zablokováno"));
+        function nextSlide(slideIndex, isFirst = false) {
+            if (isFirst) {
+                audio.play().catch(e => console.log("Audio zablokováno"));
+                confetti({
+                    particleCount: 150,
+                    spread: 90,
+                    origin: { y: 0.6 }
+                });
+            }
 
-            // Spuštění efektu konfet
-            confetti({
-                particleCount: 150,
-                spread: 90,
-                origin: { y: 0.6 }
-            });
+            const current = document.getElementById('slide-' + currentSlide);
+            const next = document.getElementById('slide-' + slideIndex);
 
-            // Přechod z černé obrazovky na fotku s přáním
-            const intro = document.getElementById('intro-screen');
-            const main = document.getElementById('main-wrapper');
-            
-            intro.style.opacity = '0';
-            setTimeout(() => {
-                intro.style.display = 'none';
-                main.style.display = 'block';
-                setTimeout(() => {
-                    main.style.opacity = '1';
-                }, 50);
-            }, 1200);
+            if (current) current.classList.remove('active');
+            if (next) next.classList.add('active');
+
+            currentSlide = slideIndex;
         }
 
         function toggleMusic() {
