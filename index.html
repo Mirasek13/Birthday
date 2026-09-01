@@ -20,22 +20,23 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        body {
+        html, body {
             background-color: #000000;
             color: #ffffff;
-            min-height: 100vh;
-            width: 100vw;
+            height: 100%;
+            width: 100%;
             overflow: hidden;
             position: fixed;
         }
 
-        /* Styling slidů pro iPhone Safari */
+        /* Styling slidů – opraveno pro mobilní Safari (100dvh) */
         .slide {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh; /* Přesná dynamická výška displeje mobilu */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -71,8 +72,14 @@
         #slide-5 { background-image: url('fotka5.jpeg'); }
         #slide-6 { background-image: url('fotka6.jpeg'); }
         #slide-7 { background-image: url('fotka7.jpeg'); }
-        #slide-8 { background-image: url('fotka8.jpeg'); }
-        #slide-9 { background-image: url('fotka1.jpeg'); }
+        
+        /* SLIDE 8 - Galerie bez fotky na pozadí (černé pozadí) */
+        #slide-8 { 
+            background-image: none; 
+            background-color: #0a0a0a; 
+        }
+
+        #slide-9 { background-image: url('fotka8.jpeg'); }
 
         .overlay {
             position: absolute;
@@ -87,7 +94,8 @@
         .card {
             position: relative;
             z-index: 2;
-            background-color: rgba(15, 15, 15, 0.9);
+            background-color: rgba(15, 15, 15, 0.88);
+            backdrop-filter: blur(8px);
             padding: 25px 20px;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
@@ -97,10 +105,13 @@
             text-align: center;
         }
 
+        /* Karta pro fotogalerii na černém pozadí */
         .card-gallery {
             max-width: 850px;
-            max-height: 80vh;
+            max-height: 85vh;
+            max-height: 85dvh;
             overflow-y: auto;
+            background-color: rgba(20, 20, 20, 0.95);
             -webkit-overflow-scrolling: touch;
         }
 
@@ -151,13 +162,13 @@
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 20px;
         }
 
         .photo-grid img {
             width: 100%;
-            height: 130px;
+            height: 135px;
             object-fit: cover;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -171,7 +182,7 @@
         }
 
         .music-btn {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
             padding: 8px 14px;
@@ -238,7 +249,7 @@
     <div id="slide-5" class="slide">
         <div class="overlay"></div>
         <div class="card">
-            <p>Chci ti taky poděkovat za to, jaká jsi. Za to, že jsi tu pro mě, za všechny chvíle, kdy jsi mě dokázala rozesmát, podržet nebo mi jen zlepšit den tím, že jsi byla se mnou. Možná ti to neříkám pokaždé, když bych měl, ale opravdu si toho vážím.❤️‍🩹</p>
+            <p>Chci ti taky poděkovat za to, jaká jsi. Za to, že jsi tu pro mě, za všechny chvíle, kdy jsi mě dokázala rozesmát, podržet nebo mi jen zlepšit den tím, že jsi byla se mnou. Možná ti to neříkám pokaždé, když bych měl, ale opravdu si toho vážím.❤️‍fält</p>
             <button class="btn-next" onclick="goToSlide(5, 6)">Pokračovat ➔</button>
         </div>
     </div>
@@ -261,9 +272,8 @@
         </div>
     </div>
 
-    <!-- SLIDE 8: Fotogalerie se všemi 8 fotkami -->
+    <!-- SLIDE 8: Fotogalerie na čistém černé pozadí -->
     <div id="slide-8" class="slide">
-        <div class="overlay"></div>
         <div class="card card-gallery">
             <h1 style="margin-bottom: 15px;">Naše společné chvíle ❤️</h1>
             <div class="photo-grid">
