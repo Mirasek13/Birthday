@@ -2,11 +2,11 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Přání pro Káťu ❤️</title>
-    <!-- Knihovna pro konfety a efekty -->
+    <!-- Knihovna pro konfety -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <!-- Romantické a čitelné písmo Playfair Display -->
+    <!-- Romantické písmo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
@@ -17,22 +17,25 @@
             margin: 0;
             padding: 0;
             font-family: 'Playfair Display', Georgia, serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: #000000;
             color: #ffffff;
             min-height: 100vh;
+            width: 100vw;
             overflow: hidden;
+            position: fixed;
         }
 
-        /* Styling slidů */
+        /* Styling slidů pro iPhone Safari */
         .slide {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -43,15 +46,15 @@
             text-align: center;
             padding: 20px;
             opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.8s ease-in-out;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
             z-index: 1;
         }
 
         .slide.active {
             opacity: 1;
-            pointer-events: auto;
-            z-index: 2;
+            visibility: visible;
+            z-index: 10;
         }
 
         /* 1. SLIDE - Úvodní černá obrazovka */
@@ -67,11 +70,10 @@
         #slide-4 { background-image: url('fotka4.jpeg'); }
         #slide-5 { background-image: url('fotka5.jpeg'); }
         #slide-6 { background-image: url('fotka6.jpeg'); }
-        #slide-7 { background-image: url('fotka1.jpeg'); }
-        #slide-8 { background-image: url('fotka2.jpeg'); }
-        #slide-9 { background-image: url('fotka3.jpeg'); }
+        #slide-7 { background-image: url('fotka7.jpeg'); }
+        #slide-8 { background-image: url('fotka8.jpeg'); }
+        #slide-9 { background-image: url('fotka1.jpeg'); }
 
-        /* Ztmavovací vrstva pro snadnou čitelnost textu přes fotku */
         .overlay {
             position: absolute;
             top: 0;
@@ -85,9 +87,8 @@
         .card {
             position: relative;
             z-index: 2;
-            background-color: rgba(15, 15, 15, 0.88);
-            backdrop-filter: blur(8px);
-            padding: 30px 25px;
+            background-color: rgba(15, 15, 15, 0.9);
+            padding: 25px 20px;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -96,31 +97,30 @@
             text-align: center;
         }
 
-        /* Karta pro fotogalerii */
         .card-gallery {
             max-width: 850px;
-            max-height: 85vh;
+            max-height: 80vh;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         h1 {
-            font-size: 2.3rem;
-            margin-bottom: 25px;
+            font-size: 2rem;
+            margin-bottom: 20px;
             color: #ffffff;
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
         p {
-            line-height: 1.85;
-            font-size: 1.15rem;
+            line-height: 1.7;
+            font-size: 1.05rem;
             color: #f0f0f0;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
         .signature {
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             color: #ff4d5e;
             font-weight: bold;
             margin-top: 15px;
@@ -128,24 +128,17 @@
             font-style: italic;
         }
 
-        /* Tlačítka */
         .btn-next {
-            padding: 14px 32px;
-            font-size: 1.1rem;
+            padding: 14px 28px;
+            font-size: 1.05rem;
             background-color: #e63946;
             color: #ffffff;
             border: none;
             border-radius: 30px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(230, 57, 70, 0.5);
             font-weight: 600;
             display: inline-block;
-        }
-
-        .btn-next:hover {
-            background-color: #ff4d5e;
-            transform: scale(1.05);
+            touch-action: manipulation;
         }
 
         .btn-close {
@@ -154,32 +147,22 @@
             margin-top: 15px;
         }
 
-        .btn-close:hover {
-            background-color: #e63946;
-        }
-
-        /* Fotogalerie (Slide 8) */
+        /* Mřížka se všemi 8 fotkami */
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .photo-grid img {
             width: 100%;
-            height: 180px;
+            height: 130px;
             object-fit: cover;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
         }
 
-        .photo-grid img:hover {
-            transform: scale(1.04);
-        }
-
-        /* Ovládání hudby dole */
         .music-player-box {
             position: fixed;
             bottom: 15px;
@@ -188,34 +171,30 @@
         }
 
         .music-btn {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            backdrop-filter: blur(5px);
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- Audio prvek -->
-    <audio id="bg-music" loop preload="auto">
+    <audio id="bg-music" loop playsinline preload="auto">
         <source src="pesnicka.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Ovládací tlačítko pro hudbu -->
     <div class="music-player-box">
         <button onclick="toggleMusic()" id="music-btn" class="music-btn">⏸️ Pozastavit hudbu</button>
     </div>
 
-    <!-- SLIDE 0: Úvodní černá obrazovka -->
+    <!-- SLIDE 0 -->
     <div id="slide-0" class="slide active">
         <div class="card">
             <h1>Přání pro mojí lásku Káťu ❤️</h1>
-            <button class="btn-next" onclick="nextSlide(1, true)">Otevřít přání 🎵</button>
+            <button class="btn-next" onclick="startGreeting()">Otevřít přání 🎵</button>
         </div>
     </div>
 
@@ -224,7 +203,7 @@
         <div class="overlay"></div>
         <div class="card">
             <p>Takže můj bobiku❤️<br><br>Dneska máš svoje 17. narozeniny a já bych ti chtěl popřát hlavně to nejdůležitější – aby si byla šťastná, spokojená a aby ses pořád smála tak, jak se směješ. ❤️ Přeju ti, aby se ti splnilo všechno, co si přeješ, aby tě v životě potkávalo co nejvíc krásných věcí a co nejmíň těch špatných. A hlavně abys měla semnou pevné nervy.💋</p>
-            <button class="btn-next" onclick="nextSlide(2)">Pokračovat ➔</button>
+            <button class="btn-next" onclick="goToSlide(1, 2)">Pokračovat ➔</button>
         </div>
     </div>
 
@@ -233,7 +212,7 @@
         <div class="overlay"></div>
         <div class="card">
             <p>Je trochu škoda, že zrovna tento týden nejsi tady se mnou, ale i když jsi teď v Rakousku a nemůžu ti popřát osobně, chci, abys věděla, že na tebe dnes myslím ještě víc než normálně. Kdybych mohl, byl bych teď hned vedle tebe, objal tě, dal ti pusu a řekl ti všechno osobně. ❤️</p>
-            <button class="btn-next" onclick="nextSlide(3)">Pokračovat ➔</button>
+            <button class="btn-next" onclick="goToSlide(2, 3)">Pokračovat ➔</button>
         </div>
     </div>
 
@@ -242,7 +221,7 @@
         <div class="overlay"></div>
         <div class="card">
             <p>Když se nad tím tak zamyslím, jsem strašně rád, že tě mám. Za tu dobu, co jsme spolu, jsme spolu zažili tolik věcí, na které nechci nikdy zapomenout. Od úplně obyčejných chvil, kdy jsme jen byli spolu, až po všechny naše společné zážitky, smích, blbosti, naše rozhovory, hádky, usmiřování a všechny ty malé momenty, které možná vypadají jako nic, ale pro mě znamenají strašně moc.💓</p>
-            <button class="btn-next" onclick="nextSlide(4)">Pokračovat ➔</button>
+            <button class="btn-next" onclick="goToSlide(3, 4)">Pokračovat ➔</button>
         </div>
     </div>
 
@@ -251,7 +230,7 @@
         <div class="overlay"></div>
         <div class="card">
             <p>A právě tyhle chvíle jsou podle mě to nejhezčí. Nemusí se pořád dít něco velkého. Stačí mi být s tebou, koukat na tebe, držet tě za ruku, obejmout tě nebo se s tebou smát úplné kravině. ❤️ Protože právě v těch obyčejných chvílích si vždycky uvědomím, jak moc pro mě znamenáš.</p>
-            <button class="btn-next" onclick="nextSlide(5)">Pokračovat ➔</button>
+            <button class="btn-next" onclick="goToSlide(4, 5)">Pokračovat ➔</button>
         </div>
     </div>
 
@@ -260,7 +239,7 @@
         <div class="overlay"></div>
         <div class="card">
             <p>Chci ti taky poděkovat za to, jaká jsi. Za to, že jsi tu pro mě, za všechny chvíle, kdy jsi mě dokázala rozesmát, podržet nebo mi jen zlepšit den tím, že jsi byla se mnou. Možná ti to neříkám pokaždé, když bych měl, ale opravdu si toho vážím.❤️‍🩹</p>
-            <button class="btn-next" onclick="nextSlide(6)">Pokračovat ➔</button>
+            <button class="btn-next" onclick="goToSlide(5, 6)">Pokračovat ➔</button>
         </div>
     </div>
 
@@ -269,7 +248,7 @@
         <div class="overlay"></div>
         <div class="card">
             <p>Je až šílené, jak rychle čas utíká. Dneska je ti 17 a já doufám, že spolu zažijeme ještě obrovské množství dalších narozenin, výročí, výletů, večerů, smíchu a všech těch našich malých i velkých momentů. Chci s tebou dál tvořit vzpomínky, ke kterým se jednou budeme vracet a říkat si, jak jsme byli mladí a jak jsme spolu všechno prožívali. ❤️</p>
-            <button class="btn-next" onclick="nextSlide(7)">Pokračovat ➔</button>
+            <button class="btn-next" onclick="goToSlide(6, 7)">Pokračovat ➔</button>
         </div>
     </div>
 
@@ -278,15 +257,15 @@
         <div class="overlay"></div>
         <div class="card">
             <p>Takže ti k těm tvým 17. narozeninám přeju úplně všechno nejlepší. Přeju ti zdraví, štěstí, lásku, radost, splněné sny a hlavně spoustu důvodů k úsměvu. A jestli ti můžu přát ještě něco, tak to, abys nikdy nepochybovala o tom, jak moc jsi pro mě důležitá.</p>
-            <button class="btn-next" onclick="nextSlide(8)">Naše vzpomínky 📸 ➔</button>
+            <button class="btn-next" onclick="goToSlide(7, 8)">Naše vzpomínky 📸 ➔</button>
         </div>
     </div>
 
-    <!-- SLIDE 8: Galerie společných fotek (bez hlavního textu) -->
+    <!-- SLIDE 8: Fotogalerie se všemi 8 fotkami -->
     <div id="slide-8" class="slide">
         <div class="overlay"></div>
         <div class="card card-gallery">
-            <h1 style="margin-bottom: 20px;">Naše společné chvíle ❤️</h1>
+            <h1 style="margin-bottom: 15px;">Naše společné chvíle ❤️</h1>
             <div class="photo-grid">
                 <img src="fotka1.jpeg" alt="Vzpomínka 1">
                 <img src="fotka2.jpeg" alt="Vzpomínka 2">
@@ -294,12 +273,14 @@
                 <img src="fotka4.jpeg" alt="Vzpomínka 4">
                 <img src="fotka5.jpeg" alt="Vzpomínka 5">
                 <img src="fotka6.jpeg" alt="Vzpomínka 6">
+                <img src="fotka7.jpeg" alt="Vzpomínka 7">
+                <img src="fotka8.jpeg" alt="Vzpomínka 8">
             </div>
-            <button class="btn-next" onclick="nextSlide(9)">Závěr ➔</button>
+            <button class="btn-next" onclick="goToSlide(8, 9)">Závěr ➔</button>
         </div>
     </div>
 
-    <!-- SLIDE 9: Závěr s přáním a tlačítkem ZAVŘÍT -->
+    <!-- SLIDE 9 -->
     <div id="slide-9" class="slide">
         <div class="overlay"></div>
         <div class="card">
@@ -311,57 +292,54 @@
     </div>
 
     <script>
-        const audio = document.getElementById('bg-music');
-        let currentSlide = 0;
+        var audio = document.getElementById('bg-music');
 
-        function shootHearts() {
-            if (typeof confetti === 'function') {
-                confetti({
-                    particleCount: 30,
-                    spread: 70,
-                    origin: { y: 0.7 },
-                    colors: ['#e63946', '#ff4d5e', '#ff758f', '#ffffff']
-                });
-            }
-        }
-
-        function nextSlide(slideIndex, isFirst = false) {
-            if (isFirst) {
-                audio.play().catch(e => console.log("Audio zablokováno"));
-                if (typeof confetti === 'function') {
+        function fireHearts() {
+            try {
+                if (window.confetti) {
                     confetti({
-                        particleCount: 120,
-                        spread: 90,
-                        origin: { y: 0.6 }
+                        particleCount: 20,
+                        spread: 60,
+                        origin: { y: 0.7 },
+                        colors: ['#e63946', '#ff4d5e', '#ffffff']
                     });
                 }
-            } else {
-                shootHearts();
-            }
+            } catch(e) {}
+        }
 
-            const current = document.getElementById('slide-' + currentSlide);
-            const next = document.getElementById('slide-' + slideIndex);
+        function startGreeting() {
+            try {
+                audio.play();
+            } catch(e) {}
 
-            if (current) current.classList.remove('active');
-            if (next) next.classList.add('active');
+            try {
+                if (window.confetti) {
+                    confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
+                }
+            } catch(e) {}
 
-            currentSlide = slideIndex;
+            document.getElementById('slide-0').classList.remove('active');
+            document.getElementById('slide-1').classList.add('active');
+        }
+
+        function goToSlide(from, to) {
+            fireHearts();
+            document.getElementById('slide-' + from).classList.remove('active');
+            document.getElementById('slide-' + to).classList.add('active');
         }
 
         function closeGreeting() {
-            const current = document.getElementById('slide-' + currentSlide);
-            const intro = document.getElementById('slide-0');
+            try {
+                audio.pause();
+                audio.currentTime = 0;
+            } catch(e) {}
 
-            if (current) current.classList.remove('active');
-            if (intro) intro.classList.add('active');
-
-            audio.pause();
-            audio.currentTime = 0;
-            currentSlide = 0;
+            document.getElementById('slide-9').classList.remove('active');
+            document.getElementById('slide-0').classList.add('active');
         }
 
         function toggleMusic() {
-            const btn = document.getElementById('music-btn');
+            var btn = document.getElementById('music-btn');
             if (audio.paused) {
                 audio.play();
                 btn.innerText = '⏸️ Pozastavit hudbu';
